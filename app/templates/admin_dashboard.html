@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-5 shadow-sm">
+  <h2 class="mb-4">Admin Dashboard</h2>
+
+  <h4 class="mb-3">Add New Job Posting</h4>
+  <form method="POST" class="mb-5">
+    <div class="mb-4">
+      <label for="title" class="form-label fw-semibold">Job Title</label>
+      <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter job title" required />
+    </div>
+    <div class="mb-4">
+      <label for="description" class="form-label fw-semibold">Job Description</label>
+      <textarea name="description" rows="6" class="form-control form-control-lg" placeholder="Enter detailed job description" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg px-4">Add Job</button>
+  </form>
+
+  <h4 class="mb-3">Existing Jobs</h4>
+  {% if jobs %}
+    <div class="list-group">
+    {% for job in jobs %}
+      <div class="list-group-item rounded-4 mb-3 shadow-sm job-item">
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="flex-grow-1">
+            <h5 class="fw-bold mb-2">{{ job.title }}</h5>
+            <div class="job-description" style="max-height: 100px; overflow: hidden;">
+              {{ job.description }}
+            </div>
+            <button class="btn btn-sm btn-outline-primary mt-2 toggle-description">Show more</button>
+          </div>
+          <div class="ms-3 text-end">
+            <small class="text-muted">Posted on {{ job.created_at.strftime('%Y-%m-%d') }}</small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">No jobs posted yet.</p>
+  {% endif %}
+</div>
+
+<script>
+document.querySelectorAll('.toggle-description').forEach(button => {
+  button.addEventListener('click', function() {
+    const description = this.previousElementSibling;
+    const isExpanded = description.style.maxHeight === 'none';
+
+    description.style.maxHeight = isExpanded ? '100px' : 'none';
+    this.textContent = isExpanded ? 'Show more' : 'Show less';
+  });
+});
+</script>
+{% endblock %}
