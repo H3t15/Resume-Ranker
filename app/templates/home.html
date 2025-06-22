@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center my-5 py-5">
+  <h1 class="display-4 fw-bold">Welcome to the AI-Powered Resume Ranker</h1>
+  <p class="lead text-secondary fs-5 mt-4">
+    Upload and rank resumes based on job descriptions using advanced NLP techniques.
+  </p>
+  {% if not current_user.is_authenticated %}
+  <div class="mt-5">
+    <a href="{{ url_for('auth.register') }}" class="btn btn-lg btn-primary me-3 px-4 py-2">Get Started</a>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-outline-primary px-4 py-2">Login</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
